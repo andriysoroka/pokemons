@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<style type="text/css">
+  span {
+    display: block;
+    border: 1px black solid;
+  }
+  a {
+    display: block;
+    height: 140px;
+    text-decoration: none;
+    text-align: center;
+  }
+  section {
+    border: 1px black solid;
+  }
+  #div1 {
+    width: 65%;
+    height: 800px;
+    float: left;
+  }
+  #div1 > div {
+    width: 33%;
+    height: 200px;
+    float: left;
+  }
+  #div2 {
+    width: 200px;
+    height: 250px;
+    float: left;
+    position: inherit;
+  }
+  .but	{
+    width: 100%;
+    height: 100px;
+    }
+  button {
+  	display: block;
+  	margin: 0 auto;
+  }
+	</style>
+</head>
+<body>
+   <div id="div1">
+
+   </div>
+   <div id="div2">
+
+   </div>
+   <div class="but">
+        <button onclick="replyСlick()"> more pokemon </button>
+   </div>
+
+<script type="text/javascript">
+var page = 0;
+function pokemon () {
+  var linkkk = 'http://pokeapi.co/api/v1/pokemon/?limit=12&offset=' + page + ' ';
+ 	var xhr = new XMLHttpRequest();
+ 	xhr.open('GET', linkkk, false);
+ 	xhr.send();
+    var numdImg, pokeImg, pokeDiv, pokeA, name, attack, element, pokeAbout, pokeSpan, pokeAbilities, seePocemon, pokeId, pokeIdNode, lil;
+    var space = " ";
+ 	if(xhr.status != 200) {
+ 		alert('some false' + xhr.status + ': ' + shr.statusText);
+ 	} else {
+      seePocemon = xhr.responseText;
+ 	    seePocemon = JSON.parse(seePocemon);
+ 	    console.log(seePocemon);
+ 	    for (var i = 0; i < seePocemon.objects.length ; i++) {
+        //console.log(seePocemon.objects[i]);       
+        //console.log(i);            
+             pokeId = seePocemon.objects[i].pkdx_id;
+             numdImg = "http://pokeapi.co/media/img/" + pokeId + ".png";
+             pokeImg = document.createElement("img");
+                 pokeImg.setAttribute("src", numdImg);
+             pokeDiv = document.createElement("div");
+          	 pokeA = document.createElement("a");
+          	     pokeA.setAttribute("href", "#");
+          	     pokeA.setAttribute("class", "getThisFuckingId")
+             name = document.createTextNode(seePocemon.objects[i].name + space);
+             attack =  document.createTextNode(seePocemon.objects[i].attack);
+             pokeIdNode = document.createTextNode(pokeId);
+             pokeId 
+ 		         pokeA.appendChild(name);
+ 		         pokeA.appendChild(pokeImg);
+ 		         //pokeA.appendChild(attack);
+             pokeA.appendChild(pokeIdNode);
+ 		         pokeDiv.appendChild(pokeA);
+             //console.log(pokeId);
+                for (var g = 0; g < seePocemon.objects[i].abilities.length; g++) {
+                      pokeSpan = document.createElement("span");
+                      pokeAbilities = document.createTextNode(seePocemon.objects[i].abilities[g].name);
+                      pokeSpan.appendChild(pokeAbilities);
+                      pokeDiv.appendChild(pokeSpan);
+                }
+ 		         element = document.getElementById("div1");
+ 		         element.appendChild(pokeDiv);
+ 		         pokeA.setAttribute("data-id", pokeId);
+                 //console.log(pokeId);
+                pokeA.onclick = function() {
+                 clinBeteils();
+                 pokeDetails(event.currentTarget.getAttribute("data-id"));
+               }
+ 		//debugger
+     // pokeGet = document.getElementById("div2")
+     }
+
+}
+}
+
+function pokeDetails(pokeId) {
+  var xhr1 = new XMLHttpRequest();
+  xhr1.open('GET', 'http://pokeapi.co/api/v1/pokemon/' + pokeId + '/', false);
+  xhr1.send();
+  //debugger
+  var seePocemon1, pokeSection, pokeDivId, pokeElement, pokeSpeed, pokeDef, pokeAttackSp_atk, pokeWeight, pokeHp, pokeSpanFor, pokeDefSp_def, pokeAttack, pokeImgId, pokeImgOn, pokelol, pokeType, br2, pokeSpace;
+  //var space = " ";
+  if(xhr1.status != 200) {
+    alert('some false' + xhr1.status + ': ' + shr1.statusText);
+  } else {
+    seePocemon1 = xhr1.responseText;
+    seePocemon1 = JSON.parse(seePocemon1);
+    //console.log(seePocemon1);
+    //console.log(seePocemon1.abilities[0].name);
+    for (var f=0; f < seePocemon1.abilities.length; f++) {
+      console.log(seePocemon1.abilities[f].name);
+    }
+
+  } 
+  console.log(seePocemon1);
+      br2 = document.createElement("br");
+      pokeSpace = " ";
+      pokeSpanForType = document.createElement("span");
+      pokeSpanForAtk = document.createElement("span");
+      pokeSpanForDef = document.createElement("span");
+      pokeSpanForHP = document.createElement("span");
+      pokeSpanForSP_atk = document.createElement("span");
+      pokeSpanForSP_def = document.createElement("span");
+      pokeSpanForSpeed = document.createElement("span");
+      pokeSpanForWeight = document.createElement("span");
+      pokeDivId = document.createElement("div");
+      pokeSection = document.createElement("section");
+        pokeType = document.createTextNode('type' + pokeSpace + seePocemon1.types[0].name + pokeSpace)
+        pokeSpeed = document.createTextNode('speed' + pokeSpace + seePocemon1.speed + pokeSpace);
+        pokeAttack = document.createTextNode('attck' + pokeSpace + seePocemon1.attack + pokeSpace);
+        pokeDef = document.createTextNode('defense' + pokeSpace + seePocemon1.defense + pokeSpace);
+        pokeAttackSp_atk = document.createTextNode('sp_atk' + pokeSpace + seePocemon1.sp_atk + pokeSpace);
+        pokeDefSp_def = document.createTextNode('sp_def' + pokeSpace + seePocemon1.sp_def + pokeSpace);
+        pokeWeight = document.createTextNode('weight' + pokeSpace + seePocemon1.weight + pokeSpace);
+        pokeHp = document.createTextNode('hp' + pokeSpace + seePocemon1.hp + pokeSpace);
+        pokeImgId = "http://pokeapi.co/media/img/" + pokeId + ".png";
+        pokelol = document.createElement("img");
+        pokelol.setAttribute("src", pokeImgId);
+        pokeSection.setAttribute("class", "info")
+                        pokeSection.appendChild(pokelol);
+                        pokeSection.appendChild(pokeSpanForType);
+                        pokeSection.appendChild(pokeSpanForAtk);
+                        pokeSection.appendChild(pokeSpanForDef);
+                        pokeSection.appendChild(pokeSpanForHP);
+                        pokeSection.appendChild(pokeSpanForSP_atk);
+                        pokeSection.appendChild(pokeSpanForSP_def);
+                        pokeSection.appendChild(pokeSpanForSpeed);
+                        pokeSection.appendChild(pokeSpanForWeight);
+                           pokeSpanForType.appendChild(pokeType);
+                           pokeSpanForAtk.appendChild(pokeAttack);
+                           pokeSpanForDef.appendChild(pokeDef);
+                           pokeSpanForHP.appendChild(pokeHp);
+                           pokeSpanForSP_atk.appendChild(pokeAttackSp_atk);
+                           pokeSpanForSP_def.appendChild(pokeDefSp_def);
+                           pokeSpanForSpeed.appendChild(pokeSpeed);
+                           pokeSpanForWeight.appendChild(pokeWeight);
+                        pokeDivId.appendChild(pokeSection);
+                        pokeElement = document.getElementById("div2");  
+                        pokeElement.appendChild(pokeSection);
+      console.log(pokeSpeed, pokeHp, pokeAttack, pokeWeight);
+}
+function clinBeteils(){
+  var pokeGet = document.getElementById("div2");
+  pokeGet.innerHTML = "";
+}
+function replyСlick() {
+  page = page + 12;
+ pokemon(page);
+ if (page >= 778) {
+  alert("stop");
+ }
+console.log(page);
+};
+pokemon(page);
+console.log(page);
+</script>
+</body>
+</html>
